@@ -1,0 +1,308 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>D3 Test</title>
+    <script type="text/javascript" src="d3.min.js"></script>
+    <style type="text/css">
+
+        .bar {
+            display: inline-block;
+            width: 20px;
+            height: 75px;   /* We'll override this later */
+            background-color: teal;
+            margin-right: 2px;  
+        }
+
+    </style>
+</head>
+<body>
+    <p>Click here to have a look on some change.</p>
+    <script type="text/javascript">
+
+        // making a chart.
+
+        var dataset = [ 5, 10, 13, 19, 21, 25, 22, 18, 15, 13,
+                11, 12, 15, 20, 18, 17, 16, 18, 23, 25 ];
+        var barPadding = 1;
+        // d3.select("body").selectAll("div")
+        //     .data(dataset)
+        //     .enter()
+        //     .append("div")
+        //     .attr("class","bar")
+        //     .style("height", function (d) {
+        //         return (d * 10) + "px";
+        //     })
+
+        // svg element
+           
+            var w = 1000;
+            var h = 400;
+            
+            var svg = d3.select("body").append("svg")
+                        .attr("height",h)
+                        .attr("width",w);
+
+
+            // var dataset = [
+            //       [ 5,     20 ],
+            //       [ 480,   90 ],
+            //       [ 250,   50 ],
+            //       [ 100,   33 ],
+            //       [ 330,   95 ],
+            //       [ 410,   12 ],
+            //       [ 475,   44 ],
+            //       [ 25,    67 ],
+            //       [ 85,    21 ],
+            //       [ 220,   88 ]
+            //   ];
+            dataset = [ 11, 12, 15, 20, 18, 17, 16, 18, 23, 25,
+                 5, 10, 13, 19, 21, 25, 22, 18, 15, 13 ];
+            // var xScale = d3.scaleOrdinal()
+            //     .domain(d3.range(dataset.length))
+            //     .range([0, w]);
+
+            d3.select("p")
+                 .on("click", function() {
+                    var selection = svg.selectAll("rect")
+                    .data(dataset)
+                    .enter()
+                    .append("rect")
+                    .attr("x", function (d,i) {
+                        return i * ( w / dataset.length) ;
+                    })
+                    .attr("y", function (d) {
+                        return h - (d * 2);
+                    })
+                    .attr("width", w / dataset.length - barPadding)
+                    .attr("height",function (d) {
+                        return (d * 2) ;
+                    })
+                    .attr("fill", function (d) {
+                        return "rgb("+ ( d * 10 ) + ",0,0)";
+                    });
+
+                    selection.transition()
+                      .duration(10000)
+                      .delay(function(d,i){ return i * (10000 / 4); })
+                      .style('opacity', 1);
+
+                  // .duration(100)
+                  // .delay(function(d,i){ return i * (100 / 4); })
+                  // .style('opacity', 1);
+
+
+                 });
+            // var x=d3.scaleOrdinal()
+            //   .domain(["Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"]) // 7 items
+            //   .range([0,1,2,3,4,5,6]);
+            // console.log(x("Saturday"));
+
+              // var yScale = d3.scaleOrdinal()
+              //   .domain(d3.range(dataset.length))
+              //   .rangeRoundBands([0, h], 0.05);
+
+            // var dataset = [];
+
+            // var numberOfItems = 10;
+
+            // var xRange = Math.random() * 1000;
+            // var yRange = Math.random() * 1000;
+
+            // for (var i = 0; i < numberOfItems; i++) {
+            //     dataset.push([Math.round(Math.random() * xRange),Math.round(Math.random()*yRange)])
+            // }
+
+
+            // var padding = 20;
+
+            // var xScale = d3.scaleLinear()
+            //                 .domain([0,d3.max(dataset,function (d) {
+            //                     return d[0];
+            //                 })])
+            //                 .range([padding,w - padding * 2]);
+
+            // var yScale = d3.scaleLinear()
+            //                 .domain([0,d3.max(dataset,function (d) {
+            //                     return d[1];
+            //                 })])
+            //                 .range([h - padding,padding]);
+
+            // var rScale = d3.scaleLinear()
+            //                 .domain([0,d3.max(dataset, function (d) {
+            //                     return d[1];
+            //                 })])
+            //                 .range([2,5]);
+            //                 
+           //  svg.selectAll("rect")
+           // .data(dataset)
+           // .attr("y", function(d) {
+           //      return h - yScale(d);
+           // })
+           // .attr("height", function(d) {
+           //      return yScale(d);
+           // })
+           // .attr("fill", function(d) {   // <-- Down here!
+           //      return "rgb(0, 0, " + (d * 10) + ")";
+           // });
+            
+
+
+            // // var xAxis = ;
+
+            // // svg.append("g")
+            // //         .attr("class", "axis")
+            // //         .attr("transform", "translate(0," + (h - padding) + ")")
+            // //         .call(d3.axisBottom()
+            // //                 .scale(xScale)
+            // //             );
+            // // svg.append("g")
+            // //     .attr("class", "axis")
+            // //     .attr("transform", "translate(" + padding + ",0)")
+
+            // //     .call(d3.axisLeft().ticks(5)
+            // //     .scale(yScale));
+
+
+
+            // svg.selectAll("circle")
+            //    .data(dataset)
+            //    .enter()
+            //    .append("circle")
+            //    .attr("cx",function (d) {
+            //        return xScale(d[0]);    
+            //    })
+            //    .attr("cy",function (d) {
+            //        return yScale(d[1]);        
+            //    })
+            //    .attr("r",function (d) {
+            //        return rScale(d[1]);
+            //    });
+
+            // svg.selectAll("text")
+            //     .data(dataset)
+            //     .enter()
+            //     .append("text")
+            //     .text(function (d) {
+            //        return d[0] + "," + d[1];    
+            //    })
+            //     .attr("x",function (d) {
+            //        return xScale(d[0]);    
+            //    })
+            //    .attr("y",function (d) {
+            //        return yScale(d[1]);        
+            //    });
+
+
+
+            //     svg.append("g")
+            //     .attr("class", "axis")
+            //     .attr("transform", "translate(0," + (h - padding) + ")")
+            //     .call(d3.axisBottom()
+            //             .scale(xScale)
+            //         );
+            //     svg.append("g")
+            //     .attr("class", "axis")
+            //     .attr("transform", "translate(" + padding + ",0)")
+
+            //     .call(d3.axisLeft().ticks(5)
+            //     .scale(yScale));
+
+
+
+               
+       
+        // // adding text to the above element
+        //     svg.selectAll("text")
+        //        .data(dataset)
+        //        .enter()
+        //        .append("text")
+        //        .text(function (d) {
+        //            return d;
+        //        })
+        //        .attr("x", function (d,i) {
+        //             return i * ( w / dataset.length) + 5 ;
+        //         })
+        //         .attr("y", function (d) {
+        //             return h - (d * 2) + 15;
+        //         })
+        //         .attr("font-family","sans-sarif")
+        //         .attr("font-size","11px")
+        //         .attr("fill","white");                 
+
+            // //Data
+            // var dataset = [ 5, 10, 15, 20, 25 ];
+
+            //   var svg = d3.select("body")
+            //     // .append("xhtml:div")
+            //     .append("svg")
+            //     .attr("width", w)
+            //     .attr("height", h);
+         
+
+            // var myCircle = svg.selectAll("circle")
+            //                  .data(dataset)
+            //                  .enter()
+            //                  .append("circle");
+
+            //     myCircle.attr("cx", function (d,i) {
+            //         return (i * 50 ) + 125;
+            //     })
+            //             .attr("cy", function (d) {
+            //                 return h/2;
+            //             })
+            //             .attr("r", function (d) {
+            //                 return d;
+            //             })
+            //             .attr("fill","yellow")
+            //             .attr("stroke","red")
+            //             .attr("stroke-width",function (d) {
+            //                 return d/2;
+            //             });
+                        
+            // var dataset = [3,4,4,3,1,3];
+            // // 
+            // var dataset = [];
+
+            // for (var i = 0; i < 25; i++) {
+            //     var newNumber = Math.random() * 30 ;
+            //     dataset.push(newNumber);
+            // }
+
+
+            // d3.select("body").selectAll("div")
+            //     .data(dataset)
+            //     .enter()
+            //     .append("div")
+            //     .attr("class","bar")
+            //     .style("height", function (d) {
+            //         var barHeight = d * 100;
+            //         return barHeight   + "px";
+            //     })
+            //     ;
+
+
+
+            // d3.select("body")
+            //     .selectAll("p")
+            //     .data(dataset)
+            //     .enter()
+            //     .append("p")
+            //     .text("New paragraph")
+            //     .style("color", function(d)
+            //         {
+            //             if ( d > 2 )
+            //             {
+            //                 return "red";
+            //             }
+            //             else
+            //             {
+            //                 return "black";
+            //             }
+            //         });
+
+
+
+        </script>
+    </body>
+    </html>
